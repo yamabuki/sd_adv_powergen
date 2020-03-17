@@ -87,7 +87,7 @@ namespace sd_adv_powergen
 	{
 		private static List<Thing> advwaterMills = new List<Thing>();
 
-		public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
+		public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
 		{
 			foreach (IntVec3 current in CompPowerPlantWater.GroundCells(loc, rot))
 			{
@@ -116,7 +116,7 @@ namespace sd_adv_powergen
 			return true;
 		}
 
-		public override void DrawGhost(ThingDef def, IntVec3 loc, Rot4 rot, Color ghostCol)
+		public override void DrawGhost(ThingDef def, IntVec3 loc, Rot4 rot, Color ghostCol, Thing thing = null)
 		{
 			GenDraw.DrawFieldEdges(CompPowerPlantWater.GroundCells(loc, rot).ToList<IntVec3>(), Color.white);
 			Color color = (!this.WaterCellsPresent(loc, rot, Find.CurrentMap)) ? Designator_Place.CannotPlaceColor.ToOpaque() : Designator_Place.CanPlaceColor.ToOpaque();
