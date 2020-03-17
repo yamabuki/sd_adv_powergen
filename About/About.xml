@@ -1,10 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>[sd] advanced powergeneration</name>
-	<author>sulusdacor</author>
-	<targetVersion>1.0.2059</targetVersion>
+	<name>[sd] advanced powergeneration - unofficial</name>
+	<author>Yamabuki</author>
+	<packageId>Yamabuki.sd.advpowergen</packageId>
+	<supportedVersions>
+		<li>1.0</li>
+		<li>1.1</li>
+	</supportedVersions>
 	<url>https://ludeon.com/forums/index.php?topic=26276.0</url>
-	<description>"advanced powergeneration"
+	<description>
+	unofficial update for 1.1
+	
+	--- original description ---
+	
+	"advanced powergeneration"
 	Ver.: 1.0-1.1.2
 	
 	a light in every corner, an extra workbench there, maybe another cooking stove - wondering where your power went?
