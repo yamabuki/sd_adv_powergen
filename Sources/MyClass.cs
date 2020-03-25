@@ -8,6 +8,7 @@
  */
 
 using RimWorld;            // RimWorld specific functions are found here (like 'Building_Battery')
+using System.Linq;
 using UnityEngine;         // Always needed
 using Verse;               // RimWorld universal objects are here (like 'Building')
 
@@ -18,9 +19,9 @@ namespace sd_adv_powergen
     {
         private static readonly Vector2 sd_adv_powergen_BarSize = new Vector2(2.3f, 0.14f);
 
-        private static readonly Material sd_adv_powergen_PowerPlantSolarBarFilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.5f, 0.475f, 0.1f));
+        private static readonly Material BarFilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.5f, 0.475f, 0.1f));
 
-        private static readonly Material sd_adv_powergen_PowerPlantSolarBarUnfilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.15f, 0.15f));
+        private static readonly Material BarUnfilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.15f, 0.15f));
 
         private float MinPowerOutput => 0f;
         private float MaxPowerOutput => 3400f;
@@ -33,33 +34,17 @@ namespace sd_adv_powergen
             }
         }
 
-        private float RoofedPowerOutputFactor
-        {
-            get
-            {
-                int num = 0;
-                int num2 = 0;
-                foreach (IntVec3 current in this.parent.OccupiedRect())
-                {
-                    num++;
-                    if (this.parent.Map.roofGrid.Roofed(current))
-                    {
-                        num2++;
-                    }
-                }
-                return (float)(num - num2) / (float)num;
-            }
-        }
+        private float RoofedPowerOutputFactor => this.parent.OccupiedRect().Average(cell => this.parent.Map.roofGrid.Roofed(cell) ? 0 : 1f);
 
         public override void PostDraw()
         {
             base.PostDraw();
-            GenDraw.FillableBarRequest r = default(GenDraw.FillableBarRequest);
+            GenDraw.FillableBarRequest r = default;
             r.center = this.parent.DrawPos + Vector3.up * 0.1f;
-            r.size = sd_adv_powergen_CompAdvPowerPlantSolar.sd_adv_powergen_BarSize;
+            r.size = sd_adv_powergen_BarSize;
             r.fillPercent = base.PowerOutput / this.MaxPowerOutput;
-            r.filledMat = sd_adv_powergen_CompAdvPowerPlantSolar.sd_adv_powergen_PowerPlantSolarBarFilledMat;
-            r.unfilledMat = sd_adv_powergen_CompAdvPowerPlantSolar.sd_adv_powergen_PowerPlantSolarBarUnfilledMat;
+            r.filledMat = BarFilledMat;
+            r.unfilledMat = BarUnfilledMat;
             r.margin = 0.15f;
             Rot4 rotation = this.parent.Rotation;
             rotation.Rotate(RotationDirection.Clockwise);
