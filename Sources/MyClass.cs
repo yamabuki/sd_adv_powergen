@@ -30,21 +30,20 @@ namespace sd_adv_powergen
 	[StaticConstructorOnStartup]
 	public class sd_adv_powergen_CompAdvPowerPlantSolar : CompPowerPlant
 	{
-		private const float sd_adv_powergen_FullSunPower = 3400f ;
-
-		private const float sd_adv_powergen_NightPower = 0f;
-
 		private static readonly Vector2 sd_adv_powergen_BarSize = new Vector2(2.3f, 0.14f);
 
 		private static readonly Material sd_adv_powergen_PowerPlantSolarBarFilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.5f, 0.475f, 0.1f));
 
 		private static readonly Material sd_adv_powergen_PowerPlantSolarBarUnfilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.15f, 0.15f));
 
+		private float MinPowerOutput => 0f;
+		private float MaxPowerOutput => 3400f;
+
 		protected override float DesiredPowerOutput
 		{
 			get
 			{
-				return Mathf.Lerp(0f, 3400f, this.parent.Map.skyManager.CurSkyGlow) * this.RoofedPowerOutputFactor;
+				return Mathf.Lerp(this.MinPowerOutput, this.MaxPowerOutput, this.parent.Map.skyManager.CurSkyGlow) * this.RoofedPowerOutputFactor;
 			}
 		}
 
@@ -72,7 +71,7 @@ namespace sd_adv_powergen
 			GenDraw.FillableBarRequest r = default(GenDraw.FillableBarRequest);
 			r.center = this.parent.DrawPos + Vector3.up * 0.1f;
 			r.size = sd_adv_powergen_CompAdvPowerPlantSolar.sd_adv_powergen_BarSize;
-			r.fillPercent = base.PowerOutput / 3400f;
+			r.fillPercent = base.PowerOutput / this.MaxPowerOutput;
 			r.filledMat = sd_adv_powergen_CompAdvPowerPlantSolar.sd_adv_powergen_PowerPlantSolarBarFilledMat;
 			r.unfilledMat = sd_adv_powergen_CompAdvPowerPlantSolar.sd_adv_powergen_PowerPlantSolarBarUnfilledMat;
 			r.margin = 0.15f;
