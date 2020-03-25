@@ -24,7 +24,7 @@ namespace sd_adv_powergen
         private static readonly Material BarUnfilledMat = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.15f, 0.15f, 0.15f));
 
         private float MinPowerOutput => 0f;
-        private float MaxPowerOutput => 3400f;
+        private float MaxPowerOutput => -this.Props.basePowerConsumption;
 
         protected override float DesiredPowerOutput
         {
