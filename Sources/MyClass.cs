@@ -15,7 +15,7 @@ using Verse;               // RimWorld universal objects are here (like 'Buildin
 namespace sd_adv_powergen
 {
     [StaticConstructorOnStartup]
-    public class sd_adv_powergen_CompAdvPowerPlantSolar : CompPowerPlant
+    public class sd_adv_powergen_CompAdvPowerPlantSolar : CompPowerPlantSolar
     {
         private static readonly Vector2 sd_adv_powergen_BarSize = new Vector2(2.3f, 0.14f);
 
@@ -38,11 +38,10 @@ namespace sd_adv_powergen
 
         public override void PostDraw()
         {
-            base.PostDraw();
             GenDraw.FillableBarRequest r = default;
             r.center = this.parent.DrawPos + Vector3.up * 0.1f;
             r.size = sd_adv_powergen_BarSize;
-            r.fillPercent = base.PowerOutput / this.MaxPowerOutput;
+            r.fillPercent = this.PowerOutput / this.MaxPowerOutput;
             r.filledMat = BarFilledMat;
             r.unfilledMat = BarUnfilledMat;
             r.margin = 0.15f;
